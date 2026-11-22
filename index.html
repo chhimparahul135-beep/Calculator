@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="halftone">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#FFDE59" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="POP-CALC" />
+  <title>POP-CALC // Comic Studio App</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- Comic & Mono Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Space+Grotesk:wght@700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Halftone & Paper Background Layer -->
+  <div class="comic-bg-layer" aria-hidden="true"></div>
+
+  <!-- 24fps Comic FX Canvas Overlay (Ink Sparks & Starbursts) -->
+  <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+  <!-- Main App Shell -->
+  <main class="app-shell" id="app-shell">
+    <!-- Top Issue Header -->
+    <header class="issue-header">
+      <div class="issue-badge">ISSUE #24</div>
+      <h1 class="app-title">POP-CALC</h1>
+      <div class="header-controls">
+        <button id="sfx-toggle" class="mini-pill" aria-label="Toggle Sound" title="Toggle Comic SFX">
+          <span id="sfx-icon">🔊</span> SFX
+        </button>
+        <button id="theme-cycle" class="mini-pill accent-pill" aria-label="Switch Theme" title="Switch Comic Theme">
+          🎨 INK
+        </button>
+      </div>
+    </header>
+
+    <!-- Comic Strip Storyboard Tape Log -->
+    <section class="tape-strip" aria-label="Calculation History">
+      <div class="tape-label">STORYBOARD</div>
+      <div class="tape-scroll" id="tape-list">
+        <span class="tape-empty">READY FOR ACTION...</span>
+      </div>
+      <button id="clear-tape" class="tape-clear" title="Clear History">✕</button>
+    </section>
+
+    <!-- Speech Bubble Display Screen -->
+    <section class="display-panel" id="display-panel">
+      <div class="expression-row" id="expression-display">0</div>
+      <div class="result-row" id="result-display">
+        <span class="digit-pop">0</span>
+      </div>
+      <!-- Speech Bubble Tail -->
+      <div class="bubble-tail" aria-hidden="true"></div>
+    </section>
+
+    <!-- Tactile Comic Keypad -->
+    <section class="keypad-grid" id="keypad" role="group" aria-label="Calculator Keypad">
+      <button class="comic-btn btn-action" data-action="clear" data-key="Escape">AC</button>
+      <button class="comic-btn btn-action" data-action="backspace" data-key="Backspace">⌫</button>
+      <button class="comic-btn btn-action" data-action="percent" data-key="%">%</button>
+      <button class="comic-btn btn-op" data-op="÷" data-key="/">÷</button>
+
+      <button class="comic-btn btn-num" data-num="7" data-key="7">7</button>
+      <button class="comic-btn btn-num" data-num="8" data-key="8">8</button>
+      <button class="comic-btn btn-num" data-num="9" data-key="9">9</button>
+      <button class="comic-btn btn-op" data-op="×" data-key="*">×</button>
+
+      <button class="comic-btn btn-num" data-num="4" data-key="4">4</button>
+      <button class="comic-btn btn-num" data-num="5" data-key="5">5</button>
+      <button class="comic-btn btn-num" data-num="6" data-key="6">6</button>
+      <button class="comic-btn btn-op" data-op="-" data-key="-">−</button>
+
+      <button class="comic-btn btn-num" data-num="1" data-key="1">1</button>
+      <button class="comic-btn btn-num" data-num="2" data-key="2">2</button>
+      <button class="comic-btn btn-num" data-num="3" data-key="3">3</button>
+      <button class="comic-btn btn-op" data-op="+" data-key="+">+</button>
+
+      <button class="comic-btn btn-num" data-action="negate">±</button>
+      <button class="comic-btn btn-num" data-num="0" data-key="0">0</button>
+      <button class="comic-btn btn-num" data-num="." data-key=".">.</button>
+      <button class="comic-btn btn-equal" data-action="equals" data-key="Enter">=</button>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
