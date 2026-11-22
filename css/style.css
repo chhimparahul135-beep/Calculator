@@ -1,0 +1,419 @@
+/* =========================================================
+   POP-CALC // 24FPS NEO-BRUTALIST COMIC STYLESHEET
+   ========================================================= */
+
+:root {
+  /* Default Theme: Halftone Classic */
+  --bg-page: #FFFDF7;
+  --bg-shell: #FFDE59;
+  --bg-panel: #FFFFFF;
+  --bg-num: #FFFFFF;
+  --bg-op: #00E5FF;
+  --bg-action: #FF6B6B;
+  --bg-equal: #FFE600;
+  --ink: #121212;
+  --text-main: #121212;
+  --text-muted: #52525B;
+  --dot-color: rgba(18, 18, 18, 0.14);
+  --shadow-hard: 5px 5px 0px #121212;
+  --shadow-btn: 4px 4px 0px #121212;
+  --border-w: 3.5px;
+  --fps-24: steps(24, end);
+}
+
+[data-theme="spider"] {
+  --bg-page: #0D0F1A;
+  --bg-shell: #171B2E;
+  --bg-panel: #0B0D17;
+  --bg-num: #1F2540;
+  --bg-op: #FF2A5F;
+  --bg-action: #00F0FF;
+  --bg-equal: #FFE600;
+  --ink: #000000;
+  --text-main: #F8FAFC;
+  --text-muted: #94A3B8;
+  --dot-color: rgba(255, 42, 95, 0.18);
+  --shadow-hard: 5px 5px 0px #FF2A5F;
+  --shadow-btn: 4px 4px 0px #00F0FF;
+}
+
+[data-theme="golden"] {
+  --bg-page: #F3E9D2;
+  --bg-shell: #E68A3E;
+  --bg-panel: #FAF3E3;
+  --bg-num: #FAF3E3;
+  --bg-op: #3B8EA5;
+  --bg-action: #D94E34;
+  --bg-equal: #F4C430;
+  --ink: #1E1916;
+  --text-main: #1E1916;
+  --text-muted: #5C4E42;
+  --dot-color: rgba(30, 25, 22, 0.14);
+  --shadow-hard: 5px 5px 0px #1E1916;
+  --shadow-btn: 4px 4px 0px #1E1916;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  background-color: var(--bg-page);
+  color: var(--text-main);
+  font-family: 'Space Grotesk', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s var(--fps-24);
+}
+
+/* Halftone Ben-Day Dot Background */
+.comic-bg-layer {
+  position: fixed;
+  inset: 0;
+  background-image: radial-gradient(var(--dot-color) 1.75px, transparent 1.75px);
+  background-size: 14px 14px;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 24fps FX Canvas Overlay */
+#fx-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  pointer-events: none;
+}
+
+/* Main App Container (Mobile First + Desktop Centered) */
+.app-shell {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+  height: 100dvh;
+  max-height: 820px;
+  background: var(--bg-shell);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: 8px 8px 0px var(--ink);
+  padding: env(safe-area-inset-top, 14px) 16px env(safe-area-inset-bottom, 16px) 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background 0.25s var(--fps-24), transform 0.08s linear;
+}
+
+@media (min-width: 460px) {
+  .app-shell {
+    height: 92dvh;
+    border-radius: 18px;
+    padding: 18px;
+  }
+}
+
+/* Header */
+.issue-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.issue-badge {
+  background: var(--ink);
+  color: #FFE600;
+  font-family: 'Bangers', cursive;
+  letter-spacing: 1.5px;
+  font-size: 0.9rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  transform: rotate(-3deg);
+}
+
+.app-title {
+  font-family: 'Bangers', cursive;
+  font-size: 1.85rem;
+  letter-spacing: 2px;
+  color: var(--text-main);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="spider"] .app-title {
+  color: #FFE600;
+  text-shadow: 2px 2px 0px #FF2A5F;
+}
+
+.header-controls {
+  display: flex;
+  gap: 6px;
+}
+
+.mini-pill {
+  background: var(--bg-panel);
+  color: var(--text-main);
+  border: 2.5px solid var(--ink);
+  box-shadow: 2.5px 2.5px 0px var(--ink);
+  border-radius: 8px;
+  padding: 5px 9px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 800;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: transform 0.125s var(--fps-24), box-shadow 0.125s var(--fps-24);
+}
+
+.mini-pill:active {
+  transform: translate(2.5px, 2.5px);
+  box-shadow: 0px 0px 0px var(--ink);
+}
+
+/* Storyboard Tape Log */
+.tape-strip {
+  display: flex;
+  align-items: center;
+  background: var(--bg-panel);
+  border: 3px solid var(--ink);
+  box-shadow: 3px 3px 0px var(--ink);
+  border-radius: 10px;
+  padding: 6px 10px;
+  gap: 8px;
+  min-height: 40px;
+}
+
+.tape-label {
+  background: #FF6B6B;
+  color: #121212;
+  font-family: 'Bangers', cursive;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  padding: 2px 6px;
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.tape-scroll {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  flex: 1;
+  scrollbar-width: none;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tape-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.tape-item {
+  background: rgba(128, 128, 128, 0.15);
+  border: 1.5px solid var(--ink);
+  padding: 2px 7px;
+  border-radius: 6px;
+  cursor: pointer;
+  animation: comicPop24 0.25s var(--fps-24);
+}
+
+.tape-empty {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+}
+
+.tape-clear {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-weight: 800;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 4px;
+}
+
+/* Speech Bubble Display */
+.display-panel {
+  position: relative;
+  background: var(--bg-panel);
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-hard);
+  border-radius: 16px;
+  padding: 14px 18px;
+  min-height: 125px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 6px;
+}
+
+/* Speech Bubble Pointer */
+.bubble-tail {
+  position: absolute;
+  bottom: -14px;
+  right: 34px;
+  width: 22px;
+  height: 14px;
+  background: var(--bg-panel);
+  border-right: var(--border-w) solid var(--ink);
+  border-bottom: var(--border-w) solid var(--ink);
+  transform: skewX(-28deg);
+}
+
+.expression-row {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  min-height: 1.4rem;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.result-row {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(2.1rem, 8vw, 2.9rem);
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.1;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  max-width: 100%;
+}
+
+/* 24fps Mechanical Digit Animation */
+.digit-pop {
+  display: inline-block;
+  animation: digitRoll24 0.166s var(--fps-24) forwards;
+}
+
+.result-slam {
+  animation: comicSlam24 0.333s var(--fps-24) forwards;
+}
+
+.panel-shake {
+  animation: comicShake24 0.333s var(--fps-24);
+}
+
+/* Keypad Grid */
+.keypad-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(5, 1fr);
+  gap: 10px;
+}
+
+.comic-btn {
+  position: relative;
+  border: var(--border-w) solid var(--ink);
+  box-shadow: var(--shadow-btn);
+  border-radius: 14px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-main);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.083s var(--fps-24), box-shadow 0.083s var(--fps-24), filter 0.083s var(--fps-24);
+  overflow: hidden;
+}
+
+.btn-num {
+  background: var(--bg-num);
+}
+
+.btn-op {
+  background: var(--bg-op);
+  color: #121212;
+  font-size: 1.65rem;
+}
+
+.btn-action {
+  background: var(--bg-action);
+  color: #121212;
+  font-size: 1.25rem;
+}
+
+.btn-equal {
+  background: var(--bg-equal);
+  color: #121212;
+  font-family: 'Bangers', cursive;
+  font-size: 2rem;
+  letter-spacing: 1px;
+}
+
+/* Tactile Press State (2 frames @ 24fps = 83ms) */
+.comic-btn:active,
+.comic-btn.is-pressed {
+  transform: translate(4px, 4px) scale(0.97);
+  box-shadow: 0px 0px 0px var(--ink);
+  filter: brightness(1.06);
+}
+
+/* =========================================================
+   24FPS CALIBRATED KEYFRAMES (1 frame = 41.67ms)
+   ========================================================= */
+
+@keyframes digitRoll24 {
+  0% {
+    opacity: 0;
+    transform: translateY(-14px) scale(1.25) rotate(-4deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px) scale(0.95) rotate(2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+}
+
+@keyframes comicSlam24 {
+  0% {
+    transform: scale(1.38) rotate(-3deg);
+  }
+  37.5% {
+    transform: scale(0.92) rotate(2deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes comicShake24 {
+  0%, 100% { transform: translateX(0); }
+  12.5% { transform: translateX(-8px) rotate(-1.5deg); }
+  25% { transform: translateX(8px) rotate(1.5deg); }
+  37.5% { transform: translateX(-6px) rotate(-1deg); }
+  50% { transform: translateX(6px) rotate(1deg); }
+  62.5% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+@keyframes comicPop24 {
+  0% { transform: scale(0.5); opacity: 0; }
+  66% { transform: scale(1.12); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
